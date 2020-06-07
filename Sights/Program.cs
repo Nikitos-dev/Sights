@@ -10,67 +10,77 @@ namespace Sights
     {
         static void Main(string[] args)
         {
-            List<Sight> newList = MakeSightList();
-            foreach (var item in newList)
-            {
-                Console.WriteLine(item);
-            }
-            Console.WriteLine();
-
-            
             SightList sights = new SightList();
             List<Sight> randomList = sights.GetRandomSights(10);
             List<Sight> list = sights.GetSights();
+
+            ExhaustiveAlgorithm exhaustiveAlgorithm = new ExhaustiveAlgorithm(16, randomList);
+            GreedyAlgorithm greedyAlgorithm = new GreedyAlgorithm();
+            MyAlgorithm myAlgorithm = new MyAlgorithm();
+
+            Console.WriteLine("Случайный набор достопримечательностей:");
             foreach (var item in randomList)
             {
                 Console.WriteLine(item);
             }
             Console.WriteLine();
-            ExhaustiveAlgorithm exhaustiveAlgorithm = new ExhaustiveAlgorithm(16, randomList);
+
+            Console.WriteLine("Алгоритм полного перебора для случайных достопримечательностей:");
             exhaustiveAlgorithm.MakeAllSets(randomList);
-            var time = 0.0;
             var sum = 0;
             List<Sight> optimalRoute1 = exhaustiveAlgorithm.GetAllSights();
             foreach (var item in optimalRoute1)
             {
-                time += item.Time;
                 sum += item.Importance;
                 Console.WriteLine(item);
             }
-            Console.WriteLine(time);
-            Console.WriteLine(sum);
+            Console.WriteLine($"Суммарная важность = {sum}");
+            Console.WriteLine();
+
+            Console.WriteLine("Жадный алгоритм для случайных достопримечательностей:");
+            List<Sight> optimalRoute2 = greedyAlgorithm.GreedySort(randomList);
+            sum = 0;
+            foreach (var item in optimalRoute2)
+            {
+                sum += item.Importance;
+                Console.WriteLine(item);
+            }
+            Console.WriteLine($"Суммарная важность = {sum}");
+            Console.WriteLine();
+
+            Console.WriteLine("Собственный алгоритм для случайных достопримечательностей:");
+            List<Sight> optimalRoute3 = myAlgorithm.Sort(randomList);
+
+            sum = 0;
+            foreach (var item in optimalRoute3)
+            {
+                sum += item.Importance;
+                Console.WriteLine(item);
+            }
+            Console.WriteLine($"Суммарная важность = {sum}");
             Console.WriteLine();
 
 
-            GreedyAlgorithm greedyAlgorithm = new GreedyAlgorithm();
-            List<Sight> optimalroute2 = greedyAlgorithm.GreedySort(randomList);
-
+            Console.WriteLine("Выбор оптимального маршрута с использованием жадного алгоритма");
+            List<Sight> finalRoute1 = greedyAlgorithm.GreedySort(list);
             sum = 0;
-            time = 0;
-            foreach (var item in optimalroute2)
+            foreach (var item in finalRoute1)
             {
-                time += item.Time;
                 sum += item.Importance;
                 Console.WriteLine(item);
             }
-            Console.WriteLine(time);
-            Console.WriteLine(sum);
+            Console.WriteLine($"Суммарная важность = {sum}");
             Console.WriteLine();
 
-            MyAlgorithm myAlgorithm = new MyAlgorithm();
-            List<Sight> optimalroute3 = myAlgorithm.Sort(list);
-
-            time = 0;
+            Console.WriteLine("Выбор оптимального маршрута с использованием собственного алгоритма");
+            List<Sight> finalRoute2 = myAlgorithm.Sort(list);
             sum = 0;
-            foreach (var item in optimalroute3)
+            foreach (var item in finalRoute2)
             {
-                time += item.Time;
                 sum += item.Importance;
                 Console.WriteLine(item);
             }
-            Console.WriteLine(time);
-            Console.WriteLine(sum);
-
+            Console.WriteLine($"Суммарная важность = {sum}");
             Console.ReadLine();
         }
         /// <summary>
