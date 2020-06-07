@@ -137,7 +137,7 @@ namespace Sights
         /// Получение лучшего пути.
         /// </summary>
         /// <returns>Лучший набор достопримечательностей.</returns>
-        public List<Sight> GetSights()
+        private List<Sight> GetSights()
         {
             return bestSights;
         }

@@ -44,7 +44,7 @@ namespace Sights
 
         public override string ToString()
         {
-            return $"{Name}, {Time} - {Importance}";
+            return $"{Name}, Важность - {Importance}, Время - {Time} ч.";
         }
     }
 }
